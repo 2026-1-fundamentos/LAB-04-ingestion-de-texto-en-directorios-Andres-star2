@@ -71,3 +71,57 @@ def pregunta_01():
 
 
     """
+    import os
+    import pandas as pd
+    os.makedirs("files/output", exist_ok=True)
+
+    datos_train = []
+    for sentimiento in ["positive", "negative", "neutral"]:
+        carpeta = f"files/input/train/{sentimiento}"
+
+        for archivo in os.listdir(carpeta):
+            ruta = os.path.join(carpeta,archivo)
+
+
+            with open(ruta,"r", encoding="utf-8") as f:
+                frase = f.read().strip()
+
+            datos_train.append({"phrase": frase, "target": sentimiento})
+
+
+    train_dataset = pd.DataFrame(datos_train)
+
+
+
+
+    datos_test = []
+    for sentimiento in ["positive", "negative", "neutral"]:
+        carpeta = f"files/input/test/{sentimiento}"
+
+        for archivo in os.listdir(carpeta):
+            ruta = os.path.join(carpeta,archivo)
+
+
+            with open(ruta,"r", encoding="utf-8") as f:
+                frase = f.read().strip()
+
+            datos_test.append({"phrase": frase, "target": sentimiento})
+
+
+    test_dataset = pd.DataFrame(datos_test)
+
+
+    train_dataset.to_csv("files/output/train_dataset.csv")
+    test_dataset.to_csv("files/output/test_dataset.csv")
+
+    return train_dataset,test_dataset
+
+
+print(pregunta_01())
+
+
+
+
+
+
+    
